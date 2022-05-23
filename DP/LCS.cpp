@@ -21,9 +21,11 @@ int main(){
     int s_size = s.size();
     int t_size = t.size();
     vector<vector<string>> DP(s_size, vector<string>(t_size, ""));
+    vector<vector<int>> size(s_size, vector<int>(t_size, 0));
     rep(i, t_size){
         if(s[0] == t[i]){
             DP[0][i] = DP[0][i] + s[0];
+            size[0][i] ++;
             break;
         }
     }
@@ -31,8 +33,9 @@ int main(){
         string stock = "";
         rep(j, t_size){
             DP[i][j] = DP[i-1][j];
+            size[i][j] = size[i-1][j];
             /* cout << "i: " << i << " j: " << j << " " << DP[i][j] << endl; */
-            if (stock.size() < DP[i][j].size() or stock=="") stock = DP[i][j];
+            if (stock.size() < size[i][j] or stock=="") stock = DP[i][j];
             if(s[i] == t[j]){
                 DP[i][j] = stock + s[i];
                 stock = "";
@@ -41,7 +44,7 @@ int main(){
     }
     string maxstr = "";
     rep(i, t_size){
-        if (DP[s_size-1][i].size() > maxstr.size()) maxstr = DP[s_size-1][i];
+        if (size[s_size-1][i] > maxstr.size()) maxstr = DP[s_size-1][i];
     }
     cout << maxstr << endl;
     return 0;
