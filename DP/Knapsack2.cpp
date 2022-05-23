@@ -20,28 +20,25 @@ int main(){
     vector<ll> w(N, 0);
     vector<ll> v(N, 0);
     rep(i, N) cin >> w[0] >> v[0];
-    vector<vector<ll>> DP(N+5, vector<ll>(10000010,INF));
+    vector<vector<ll>> DP(N+5, vector<ll>(100010,INF));
     DP[0][v[0]] = w[0];
     DP[0][0] = 0;
     reps(i,N-1){
-        rep(j,10000010){
+        rep(j,100010){
             if(DP[i-1][j]==INF) continue;
             ll sum = w[i] + DP[i-1][j];
             DP[i][j+v[i]] = min(sum, DP[i-1][j+v[i]]);
             chmin(DP[i][j], DP[i-1][j]);
+            cout << i << ' ' << j << ' ' << DP[i][j] << endl;
         }
     }
     ll max;
-    rrep(i,10000010){
+    rrep(i,100010){
         if (DP[N-1][i] <= W){
             max = i;
             break;
         }
     }
     cout << max << endl;
-    /*rep(i,N){
-        rep(j,W+1) cout << DP[i][j] << '\t';
-        cout << endl;
-    }I*/
     return 0;
 }
