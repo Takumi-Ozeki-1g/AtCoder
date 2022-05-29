@@ -15,6 +15,26 @@ template<class T> bool chmin(T& a,T b){if(a>b){a=b;return true;}return false;}
 const ll INF = 1LL << 60;
  
 int main(){
-    
+    int N, K;
+    cin >> N >> K;
+    vector<int> a(N);
+    rep(i, N) cin >> a[i];
+    vector<bool> DP(K+1, false);
+    set<int> s;
+    s.insert(0);
+    reps(i, K+1){
+        rep(j, N){
+            if(s.find(i - a[j]) != s.end()){
+                DP[i] = true;
+                break;
+            }
+            if(j == N-1) s.insert(i);
+        }
+    }
+    // rep(i, K+1) cout << DP[i];
+    // cout << endl;
+    string winner = "Second";
+    if(DP[K]) winner = "First";
+    cout << winner << endl;
     return 0;
 }
